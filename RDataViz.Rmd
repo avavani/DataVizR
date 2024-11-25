@@ -323,7 +323,7 @@ Okay one last trick—you can also animate your graphs using ggplot! For this, l
 
 ```{r}
 #load in the packages that we will need
-p_load(gganimate, gifski)
+p_load(gganimate)
 
 
 affordablehousing <- st_read("https://hub.arcgis.com/api/v3/datasets/ca8944190b604b2aae7eff17c8dd9ef5_0/downloads/data?format=geojson&spatialRefId=4326&where=1%3D1")
@@ -391,8 +391,8 @@ plot3 <- plot3 +
   #the segments that allow you to animate
   transition_states(Year, #the variable which will define the frames of animation 
                     #or "states". Here, the gif moves between various Years in ach frame
-                    transition_length = 5, #the length of each transition
-                    state_length = 4) + #how long the state should last
+                    transition_length = 30, #the length of each transition
+                    state_length = 20) + #how long the state should last
   ease_aes('linear') #the style of animating
 ```
 
@@ -402,14 +402,14 @@ In short, to animate, you will just need to specify the variable through which y
 
 ```{r}
 #uncomment these sections when you run the markdown
-#however, you will need to encode the gifs seperate to knit them
+#however, you will need to encode the gifs seperatly to knit them
 #to add gifs just write this in your file ![caption](file/path/to/gif.gif)
 
 #plot3animate <- animate(plot3, 
-        #nframes = 29, #the number of frames, here equal to the number of years in data
-        #fps = 1, #frame per second
-        #width = 800, 
-        #height = 600)
+                        #nframes = 29, #no of frames
+                        #fps = 0.8, #frame per second
+                        #width = 800, 
+                        #height = 600)
 
 #anim_save("plot3.gif", plot3animate)
 
@@ -447,7 +447,7 @@ scale_x_log10()+
   ease_aes('linear')
 
 #uncomment these sections when you run the markdown
-#however, you will need to encode the gifs seperate to knit them
+#however, you will need to encode the gifs seperately to knit them
 #to add gifs just write this in your file ![caption](file/path/to/gif.gif)
 #plot4animate <- animate(plot4, 
         #width = 800, 

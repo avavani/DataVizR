@@ -105,7 +105,10 @@ Another thing I have to do here is to only select the mode share columns I calcu
 Now that our data is set up, let us begin by creating a rough plot. ggplot works by layering objects on top of one another, so we start by specifying the data layer (here being bars of the bar chart).
 
 ![](RDataViz_files/figure-html/pressure-1.png)<!-- -->
+
 Notice that when specifying the aesthetics, I assign the mode column as the X data and percentage column as the Y data. This helps ggplot recognise what data to put where—in the plot above, you see that all the mode names are in the X axis and all the percentage values are in Y axis. Flip it around to see how the data changes. 
+
+You can also use the function coord_flip() to change x and y values. If you do so, you will just need to add coord_flip() to your ggplot call and R handles the rest automatically. X will remain X and Y will remain Y in all instances in your code, but the plot will be flipped. 
 
 Whens specifying the fill colour, you can use either a hex code or a named colour in quotes. R has more than 600 named colours that it recognizes. A list of all such colours can be found [here](https://www.datanovia.com/en/blog/awesome-list-of-657-r-color-names/).
 
@@ -122,6 +125,7 @@ plot1+
 ```
 
 ![](RDataViz_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+
 Here, I specify the label text to be paste0((round(percentage, 1)), "%")). Lets break this command down:
 
 * paste0(): This function combines all the variables within it to create one string. As the two variables here are the rounded percentage and %, the label would be "[PERCENT]%"
@@ -144,6 +148,7 @@ plot1
 ```
 
 ![](RDataViz_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
 Here, my geom_label command has two arguments that specify the position/size of my labels. Though both of these arguements take numbers, they are slightly different.
 
 * size specifies the font size of the labels. By default, it interprets the input as being in mm. So when I specify size to be 4, I am asking R to make the labels be 4mm. 
@@ -168,6 +173,8 @@ plot1
 ```
 
 ![](RDataViz_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+Usually, labels are placed by default on the top left corner. While you can move it using various commands in the theme(), it can get a bit tricky. More on this below. 
 
 The next thing you will need to do is specify the themes, whichh specify the design of other stylistic chart elements. You can choose between preset R themes, specify your own theme, or do both! There are a lot of themes you can choose from.
 
@@ -249,13 +256,16 @@ plot1
 ```
 
 ![](RDataViz_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
 Lets go over the commands that I specify:
 
 * text: Sets the global format style for all text in the plot (except axis text). This modies the titles, subtitles, and caption. Here, I want the font family to be IBM Plex Sans, and the colour to be blue. 
-* plot.title and plot.subtitle: Sets the text style for the title and subtitle. I want my title to be bolded, and be of size 16 (mm).
+* plot.title and plot.subtitle: Sets the text style for the title and subtitle. I want my title to be bolded, and be of size 16 (mm). This command can also take the arguments hjust or vjust, which specify the position where the title should be relative to the plot. For reference—hjust: 0 (left) to 1 (right). vjust: 0 (bottom) to 1 (top).
 * axis.text: The text command however doesn't affect axis text, which is recognized by R to be a different thing. Hence, I specify the format for them here. 
 * panel.grid.minor, panel.grid.major.y, panel.grid.major.x: These functions affect the gridlines of the plot. Gridlines are the horizontal and verticles lines we see in the plot. In R, there are major gridlines and minor gridlines. element_blank() makes these gridlines invisible, whereas element_line() helps me specify the formatting of the grid lines. R is a bit weird with gridlines—when it says panel.grid.major.y, it means the lines that are coming out from the y axis, NOT vertical lines (as one would assume). Play around with the functions to see how it affects the plot. 
 * plot.margin(): Adds 10 units padding on all sides. Here, the margin units are in points, which is a printing measure. 
+
+Commands such as plot
 
 And there is my plot! I can now export this chart to put in any document I see fit using the ggsave function. You can export it as a jpeg, a png, a pdf, or a svg to further edit in other software! You can also use the bg command to specify the transparency of the background.
 
@@ -480,6 +490,7 @@ plot3
 ```
 
 ![](RDataViz_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+
 A thing to note is that animate doesn't recognize any font asides from system fonts. I think it is possible to fight R on this, but for the sake of time I will resort to using system defaults. 
 
 The above section however, just gives me the rough plot of my chart. If you print it, it looks very weird because all the unit values from various years are mapped on top of one another. To animate it, you would need to add the following sections.
@@ -587,6 +598,7 @@ plot(philly[4])
 ```
 
 ![](RDataViz_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
+
 A cool thing about tigris is that it can help you automatically erase sections of the map that would be covered by water. I find that having water bodies erased gives you prettier maps. I also transform the plot into a coordinate reference system more suitable for mapping Philadelphia.
 
 
@@ -704,6 +716,7 @@ plot5
 ```
 
 ![](RDataViz_files/figure-html/unnamed-chunk-27-1.png)<!-- -->
+
 There are a few new things in this plot. Lets go over them:
 
 * scale_fill_gradient: Sets the fill of the chloropleth based on the colours that you specified. Here, the gradient moves from a light pink to a dark pink. 

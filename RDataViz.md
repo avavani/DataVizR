@@ -1,7 +1,7 @@
 ---
 title: "RDataViz"
 author: "Avani"
-date: "2024-11-25"
+date: "2024-11-26"
 output:
   html_document:
     keep_md: yes
@@ -259,10 +259,10 @@ plot1
 
 Lets go over the commands that I specify:
 
-* text: Sets the global format style for all text in the plot (except axis text). This modies the titles, subtitles, and caption. Here, I want the font family to be IBM Plex Sans, and the colour to be blue. 
+* text: Sets the global format style for all text in the plot (except axis text). This modifies the titles, subtitles, and caption. Here, I want the font family to be IBM Plex Sans, and the colour to be blue. 
 * plot.title and plot.subtitle: Sets the text style for the title and subtitle. I want my title to be bolded, and be of size 16 (mm). This command can also take the arguments hjust or vjust, which specify the position where the title should be relative to the plot. For reference—hjust: 0 (left) to 1 (right). vjust: 0 (bottom) to 1 (top).
 * axis.text: The text command however doesn't affect axis text, which is recognized by R to be a different thing. Hence, I specify the format for them here. 
-* panel.grid.minor, panel.grid.major.y, panel.grid.major.x: These functions affect the gridlines of the plot. Gridlines are the horizontal and verticles lines we see in the plot. In R, there are major gridlines and minor gridlines. element_blank() makes these gridlines invisible, whereas element_line() helps me specify the formatting of the grid lines. R is a bit weird with gridlines—when it says panel.grid.major.y, it means the lines that are coming out from the y axis, NOT vertical lines (as one would assume). Play around with the functions to see how it affects the plot. 
+* panel.grid.minor, panel.grid.major.y, panel.grid.major.x: These functions affect the gridlines of the plot. Gridlines are the horizontal and verticals lines we see in the plot. In R, there are major gridlines and minor gridlines. element_blank() makes these gridlines invisible, whereas element_line() helps me specify the formatting of the grid lines. R is a bit weird with gridlines—when it says panel.grid.major.y, it means the lines that are coming out from the y axis, NOT vertical lines (as one would assume). Play around with the functions to see how it affects the plot. 
 * plot.margin(): Adds 10 units padding on all sides. Here, the margin units are in points, which is a printing measure. 
 
 Commands such as plot

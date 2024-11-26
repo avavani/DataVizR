@@ -4,7 +4,6 @@ format: html
 editor: visual
 ---
 
-
 ## Introduction
 
 Though unintuitive at first, R offers a powerful way to visualize large data sets. With the right package, you can make charts and maps in R that look equally (if not better) than those you can make in ArcGIS or Illustrator. Most importantly, R is free and open-source and hence allows much smaller organisations (who cannot afford expensive ArcGIS or Adobe license) to leverage the power of GIS. More on ArcGIS and ESRI's monopoly of GIS [here](https://blog.cleverelephant.ca/2018/11/esri-dominates.html). Whenever possible we should challenge the software monopoly of big corporations because:
@@ -32,7 +31,6 @@ ggplot is one of the most popular R data visualization packages. ggplot stands f
 You really can do a lot with it! Lets go through the steps of creating a simple bar chart in ggplot.
 
 First, lets set up our environment and call our data. When setting up your data for plotting, remember that the column names appear as the axis labels. Hence, when I set up my pivoted data, I try to use column names that would make the most sense.
-
 
 ```{r}
 #| message: false
@@ -76,9 +74,7 @@ philly_commute.2022 <- get_acs(
   )
 ```
 
-
 Now that our data is set up, let us begin by creating a rough plot. ggplot works by layering objects on top of one another, so we start by specifying the data layer (here being bars of the bar chart).
-
 
 ```{r}
 plot1 <- ggplot(philly_commute.2022, 
@@ -92,11 +88,9 @@ plot1 <- ggplot(philly_commute.2022,
 plot1
 ```
 
-
 R has more than 600 named colours that it recognizes. A list of all such colours can be found [here](https://www.datanovia.com/en/blog/awesome-list-of-657-r-color-names/).
 
 Now that we have our base chart, we can begin our customizations. Lets start by geom_label (or geom_text) which adds text labels to our chart objects.
-
 
 ```{r}
 plot1+
@@ -107,9 +101,7 @@ plot1+
   )
 ```
 
-
 We have our text labels! Stylistically I prefer using the geom_label function instead of geom_text as it renders labels with a filled background. So lets replace that.
-
 
 ```{r}
 plot1 <- plot1 +
@@ -124,9 +116,7 @@ plot1 <- plot1 +
 plot1
 ```
 
-
 Now, lets add more text to our plot, i.e. change the labels using the labs() command.
-
 
 ```{r}
 plot1 <- plot1 +
@@ -141,9 +131,7 @@ plot1 <- plot1 +
 plot1
 ```
 
-
 The next thing you will need to do is specify the themes, which are other stylistic elements of the chart. Themes are where you would adjust other elements of the chart such as gridlines, text positions etc. You can choose between preset R themes, specify your own thing, or do both! There are a lot of themes you can choose from.
-
 
 ```{r}
 plot1 +
@@ -155,9 +143,7 @@ plot1 +
   theme_classic()
 ```
 
-
 Personally, I prefer theme_minimal, so that is what we will use for the plot.
-
 
 ```{r}
 plot1 <- plot1 +
@@ -166,9 +152,7 @@ plot1 <- plot1 +
 plot1
 ```
 
-
 I prefer using the minimal theme alongside customizing other elements (such as fonts) using the theme function. Using the packages showtext and sysfonts, you can import google fonts or any other system fonts downloaded on your device.
-
 
 ```{r}
 #first, lets call in our packages
@@ -189,9 +173,7 @@ plot1 +
     axis.text = element_text(size = 11, family = "IBM Plex Sans", color = "#2F4858"))
 ```
 
-
 The theme command gives you quite a lot of freedom to change the elements in your plot! I would encourage you to explore it further. For now, I want to adjust my gridlines and other plot elements.
-
 
 ```{r}
 plot1 <- plot1 +
@@ -215,9 +197,7 @@ plot1 <- plot1 +
 plot1
 ```
 
-
 And there is my plot! I can now export this chart to put in any document I see fit using the ggsave function. You can export it as a jpeg, a png, a pdf, or a svg to further edit in other softwares!
-
 
 ```{r}
 ggsave(plot = plot1,
@@ -228,11 +208,9 @@ ggsave(plot = plot1,
        height = 5) #height of the image
 ```
 
-
 A note of caution is that your saved plot might end up looking very different than your plot output in quarto. This happens because quarto will compress image outputs. Hence, you may need to play around with sizes of fonts and such in order to make your final plot look good.
 
 Great, I hope you now understand what we mean when we say ggplot layers—its not too different than illustrator layers! Think of ggplot commands as steps you would need to do in illustrator—only here instead of mouse clicks, you memorize the steps instead. Lets move on to another example. As before, I call in my data and arrange it in the correct structure.
-
 
 ```{r}
 plot2_vars <- c(
@@ -257,11 +235,9 @@ plot2_data <- get_acs(
   filter(!is.na(Income))
 ```
 
-
 For this plot, I want to use a new google font called Jost. I will not show how to call system fonts in this document as it is slightly complicated and I don't know how you would do it on a windows device. However, if you are interested, you can read about it [here](https://www.cararthompson.com/posts/2024-01-12-using-fonts-in-r-for-dataviz/2024-01-12_getting-fonts-to-work).
 
 I also call in the package scales, which is a nifty little tool to get various metrics (percentage, money) formatted to look pretty in your plot.
-
 
 ```{r}
 font_add_google("Jost")
@@ -270,9 +246,7 @@ showtext_auto()
 p_load(scales)
 ```
 
-
 Here, I am plotting a scatter plot. The scales package is especially useful when I am setting the labels of my x axis. Here, I use it shorten dollar amounts to the first three numbers and add the suffix k behind it.
-
 
 ```{r}
 plot2 <- ggplot(plot2_data,
@@ -297,9 +271,7 @@ plot2 <- ggplot(plot2_data,
 plot2
 ```
 
-
 The rest of this section is about setting the theme and customisations. Here, I set the fill of the plot to a different colour. However, this means that I won't be able to export it as a transparent png.
-
 
 ```{r}
 plot2+ 
@@ -328,11 +300,9 @@ plot2+
     y = "% of Transit Commuters")
 ```
 
-
 ## Getting Crazy with gganimate
 
 Okay one last trick—you can also animate your graphs using ggplot! For this, let us call in the data on affordable housing production in Philadelphia from OpenDataPhilly. Here, rather than downloading the data manually, I tell R to download the data directly from the url. You can do this too—just right click the data you want, copy the clean link, and put it in place of my url. You may need to change the calling function for different file types—since I am downloading a geojson, I use the st_read which reads spatial files. If you were calling in a csv, you would want to use read.csv.
-
 
 ```{r}
 #| warning: false
@@ -358,9 +328,7 @@ plot3data <- affordablehousing %>%
 #removing NA values
 ```
 
-
 As before, we manipulate our data and get it ready to plot. We also follow similar steps as before to create our base plot, with two key command differences. In this chart, I used scale_fill_manual to manually set the colours of my categorial data.
-
 
 ```{r}
 #| warning: false
@@ -404,9 +372,7 @@ plot3 <- ggplot(plot3data,
 
 ```
 
-
 The above section however, just gives me the rough plot of my chart. If you print it, it looks very weird because all the unit values from various years are mapped on top of one another. To animate it, you would need to add the following sections.
-
 
 ```{r}
 plot3 <- plot3 +
@@ -418,11 +384,9 @@ plot3 <- plot3 +
   ease_aes('cubic-in-out') #the style of animating
 ```
 
-
 I will not go too much into the details of gganimate because it is vast and you really only get better at it through trial and error. You can find a really good cheatsheet [here](https://rstudio.github.io/cheatsheets/gganimate.pdf) if you are curious to learn further.
 
 In short, to animate, you will just need to specify the variable through which you want to transition (here defined as Year). Once you have your specifications, you can render your gif using the animate command.
-
 
 ```{r}
 #| warning: false
@@ -435,9 +399,7 @@ animate(plot3,
         renderer = gifski_renderer())
 ```
 
-
 You really can do a lot with gganimate! Here is another example, adapted from the gganimate documentation page [here](https://gganimate.com/). In this plot, we will be showing change in life expectancy over GDP per capital in various countries. The dataset to do so is already loaded in R.
-
 
 ```{r}
 #calling a pre-existing dataset in R
@@ -472,20 +434,16 @@ animate(plot4,
         renderer = gifski_renderer())
 ```
 
-
 ## Spatial Data with Tigris and Geom_Sf
 
 Okay, now lets try to plot some maps! To start, lets plot a simple chloropleth using the transit data we called previously. The package Tigris allows us to easily call shapefiles of various US political subdivisions and is a powerful tool when plotting US data.
-
 
 ```{r}
 philly <- tigris::tracts(state = "PA", county = "Philadelphia", year = 2022)
 plot(philly[4])
 ```
 
-
 A cool thing about tigris is that it can help you automatically erase sections of the map that would be covered by water. I find that having water bodies erased gives you prettier maps. I also transform the plot into a coordinate reference system more suitable for mapping Philaldelphia.
-
 
 ```{r}
 philly <- philly %>%
@@ -495,9 +453,7 @@ philly <- philly %>%
 plot(philly[4])
 ```
 
-
 If you notice, now my map has gaps in it to account for water bodies. Another cool thing you can do with tigris is to call polygons of water bodies in an area. Again, I find that this makes for a prettier plot. So lets call the water of all the neighbouring counties and then crop the shapefile to the extent of Philadelphia.
-
 
 ```{r}
 philly_water <- tigris::area_water(state = "PA", county = "Philadelphia", year = 2022)%>%
@@ -515,9 +471,7 @@ ggplot() +
   geom_sf(data = philly_water, fill = "dodgerblue4", color = "dodgerblue", alpha = 0.6)
 ```
 
-
 We can also call up the shapefiles of PA and NJ that are adjacent to Philly. We don't need any gridlines or variables in our data, so I specify the theme to be theme_void().
-
 
 ```{r}
 pa <- tigris::counties(state = "PA", year = 2022)%>%
@@ -539,9 +493,7 @@ ggplot() +
   theme_void()
 ```
 
-
 Lets plot our data now. To start, lets join it with our philly census tract map and then add it as a layer.
-
 
 ```{r}
 philly <- philly %>%
@@ -572,9 +524,7 @@ plot5 <- ggplot() +
 plot5
 ```
 
-
 Lets now work on our customisations.
-
 
 ```{r}
 plot5 +
@@ -591,9 +541,7 @@ plot5 +
         legend.title = element_text(vjust = 1, hjust = 0.1)) #adjusts text
 ```
 
-
 Lets try plotting point data of affordable housing next. To start, we would need to do some data manipulation. Annoyingly, point data is difficult to plot in ggplot if the X and Y coordinates are not stored in separate columns. Hence, to start, we would transform our affordable housing's crs, and create two new columns that subset the longitude and latitude in geometry.
-
 
 ```{r}
 affordablehousing <- st_transform(affordablehousing, 2272)%>%
@@ -603,9 +551,7 @@ affordablehousing <- st_transform(affordablehousing, 2272)%>%
   )
 ```
 
-
 The steps that we would follow is quite similar to what has been outlines previously, except the introduction of a new function (guides). Guides helps you override aesthetic styling in the legend and make the individual circles in the legend bigger.
-
 
 ```{r}
 ggplot() +
@@ -634,6 +580,4 @@ ggplot() +
   guides(color = guide_legend(override.aes = list(size = 3))) #override aesthetic styling
 ```
 
-
 And there is our map!
-
